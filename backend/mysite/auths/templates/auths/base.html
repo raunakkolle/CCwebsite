@@ -3,16 +3,15 @@
 <html>
 <head>
 
-    <title>{{ block title }}</title>
+    <title>{% block title %}My amazing site{% endblock %}</title>
 </head>
 <body>
-<h2>Welcome to this website</h2>
-<h1>{{ block pagedetail }}</h1>
+<h2>Welcome to this website header</h2>
+{% block content %}{% endblock %}
 
 
 <footer>
-    
-    This is a awesome page
+    This is a awesome page's footer
 </footer>
 </body>
 </html>
