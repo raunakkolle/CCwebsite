@@ -1,4 +1,4 @@
-from django.urls import path,include
+from django.urls import path,include, re_path
 from . import views
 
 urlpatterns = [
@@ -9,9 +9,9 @@ urlpatterns = [
     path(r'login/', views.login, name = "login" ),
     path(r'checkserver/', views.checkserver, name = "login" ),
     path(r'restricted/', views.restricted, name = "restricted" ),
-    # url(r'reset/password/reset/confirm/(?P<uid>[\w-]+)/(?P<token>[\w-]+)/$', view.PasswordResetView),
+    re_path(r'reset/password/reset/confirm/(?P<uid>[\w-]+)/(?P<token>[\w-]+)/$', views.passwordReset),
+    path('activate/<str:uid>/<str:token>/', views.activate,),
     # url(r'^reset/password/reset/confirm/(?P<uid>[\w-]+)/(?P<token>[\w-]+)/$', PasswordResetView.as_view(),),
-    # url(r'^reset/password/reset/confirm/(?P<uid>[\w-]+)/(?P<token>[\w-]+)/$', PasswordResetView.as_view(),),
-    
+    # /activate/{uid}/{token}
     #path(r'test/<int:nos>/<int:nos2>/', views.test, name = "test" ),
 ]
