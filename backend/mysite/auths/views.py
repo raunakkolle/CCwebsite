@@ -23,11 +23,11 @@ def checkserver(request):
 def restricted(request, *args, **kwargs):
     return Response(data = "You are accessing Logged in Content", status = status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 def passwordReset(request, *args, **kwargs):
     data = str(*args) +"|"+ str(**kwargs) 
     return Response(data =data+ "Send POST request to reset password", status = status.HTTP_200_OK)
-
 
 @api_view(['GET'])
 def activate(request, uid, token):
@@ -41,10 +41,6 @@ def activate(request, uid, token):
     return Response("res"+content)
 
 
-
 def login(request):
     # return HttpResponse("hello")
     return render(request,'auths/login.html')
-
-def test(request, nos, nos2):
-    return HttpResponse("hello" + str(nos))
