@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from datetime import datetime
 import requests
+
+from rest_framework.views import APIView
+from .serializers import *
 
 
 # Create your views here.
@@ -21,7 +24,8 @@ def checkserver(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def restricted(request, *args, **kwargs):
-    return Response(data = "You are accessing Logged in Content", status = status.HTTP_200_OK)
+    current_user = request.user
+    return Response(data = str(current_user) +" You are accessing Logged in Content", status = status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -44,3 +48,78 @@ def activate(request, uid, token):
 def login(request):
     # return HttpResponse("hello")
     return render(request,'auths/login.html')
+
+
+
+
+@permission_classes([IsAuthenticated])
+class getUserProfile(APIView):
+
+    def get(self,request):
+        data = UserProfile.objects.filter(user=request.user.userprofile)
+        serializer = UserProfileSerializer(data, many= True)
+        return Response(serializer.data) # Return JSON
+
+
+
+
+@permission_classes([IsAuthenticated])
+class getEducationData(APIView):
+
+    def get(self,request):
+        education = Education.objects.filter(user=request.user.userprofile)
+        serializer = UserEducationSerializer(education, many= True)
+        return Response(serializer.data) # Return JSON
+
+
+@permission_classes([IsAuthenticated])
+class getExperienceData(APIView):
+
+    def get(self,request):
+        data = Experience.objects.filter(user=request.user.userprofile)
+        serializer = UserExperienceSerializer(data, many= True)
+        return Response(serializer.data) # Return JSON
+
+
+
+class getSkills(APIView):
+
+    def get(self,request):
+        data = Skill.objects.all()
+        serializer = SkillSerializer(data, many= True)
+        return Response(serializer.data) # Return JSON
+
+
+
+@permission_classes([IsAuthenticated])
+class updateEducationData(APIView):
+
+    def get(self,request, id):
+        
+        data = get_object_or_404(Education, user=request.user.userprofile, pk= id)
+        
+        data.institute_name = "updatedAgain"
+        
+        data.save()
+
+        data = get_object_or_404(Education, user=request.user.userprofile, pk= id)
+        serializer = UserEducationSerializer(data)
+        return Response(serializer.data) # Return JSON
+        
+@permission_classes([IsAuthenticated])
+class updateExperienceData(APIView):
+
+    def get(self,request, id):
+        
+        data = get_object_or_404(Experience , user=request.user.userprofile, pk= id)
+        
+        data.title   = "updatedAgain"
+        
+        data.save()
+
+        data = get_object_or_404(Experience, user=request.user.userprofile, pk= id)
+        serializer = UserExperienceSerializer(data)
+        return Response(serializer.data) # Return JSON
+        
+        
+
