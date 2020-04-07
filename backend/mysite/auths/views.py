@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from datetime import datetime
 import requests
-
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from .serializers import *
 
@@ -56,12 +56,9 @@ def login(request):
 class getUserProfile(APIView):
 
     def get(self,request):
-        data = UserProfile.objects.filter(user=request.user.userprofile)
+        data = UserProfile.objects.filter(user=request.user)
         serializer = UserProfileSerializer(data, many= True)
         return Response(serializer.data) # Return JSON
-
-
-
 
 @permission_classes([IsAuthenticated])
 class getEducationData(APIView):
@@ -71,7 +68,6 @@ class getEducationData(APIView):
         serializer = UserEducationSerializer(education, many= True)
         return Response(serializer.data) # Return JSON
 
-
 @permission_classes([IsAuthenticated])
 class getExperienceData(APIView):
 
@@ -80,8 +76,6 @@ class getExperienceData(APIView):
         serializer = UserExperienceSerializer(data, many= True)
         return Response(serializer.data) # Return JSON
 
-
-
 class getSkills(APIView):
 
     def get(self,request):
@@ -89,37 +83,87 @@ class getSkills(APIView):
         serializer = SkillSerializer(data, many= True)
         return Response(serializer.data) # Return JSON
 
-
-
 @permission_classes([IsAuthenticated])
 class updateEducationData(APIView):
-
-    def get(self,request, id):
+    def post(self,request,id):
+        edu = get_object_or_404(Education, user=request.user.userprofile, pk= id)        
+        requestData = request.data
+        requestData['user'] = edu.user.pk
+        serializer = UserEducationSerializer(edu,data=requestData)
         
-        data = get_object_or_404(Education, user=request.user.userprofile, pk= id)
-        
-        data.institute_name = "updatedAgain"
-        
-        data.save()
-
-        data = get_object_or_404(Education, user=request.user.userprofile, pk= id)
-        serializer = UserEducationSerializer(data)
-        return Response(serializer.data) # Return JSON
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors)
         
 @permission_classes([IsAuthenticated])
 class updateExperienceData(APIView):
+    def post(self,request,id):
+        exp = get_object_or_404(Experience, user=request.user.userprofile, pk= id)        
+        requestData = request.data
+        requestData['user'] = edu.user.pk
+        serializer = UserExperienceSerializer(exp,data=requestData)
+        
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors)
 
-    def get(self,request, id):
+@permission_classes([IsAuthenticated])
+class updateUserProfile(APIView):
+    def post(self,request):
+        profile = get_object_or_404(UserProfile, user=request.user)        
+        requestData = request.data
+        requestData['user'] = profile.user.pk
+        serializer = UserProfileSerializer(profile,data=requestData)
         
-        data = get_object_or_404(Experience , user=request.user.userprofile, pk= id)
-        
-        data.title   = "updatedAgain"
-        
-        data.save()
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors)
 
-        data = get_object_or_404(Experience, user=request.user.userprofile, pk= id)
-        serializer = UserExperienceSerializer(data)
-        return Response(serializer.data) # Return JSON
         
         
+
+@permission_classes([IsAuthenticated])
+class addEducationData(APIView):
+    def post(self,request):
+        requestData = request.data
+        requestData['user'] = request.user.userprofile.pk
+        serializer = UserEducationSerializer(data=requestData)
+        
+        
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors)
+
+@permission_classes([IsAuthenticated])
+class addExperienceData(APIView):
+    def post(self,request):
+        requestData = request.data
+        requestData['user'] = request.user.userprofile.pk
+        serializer = UserExperienceSerializer(data=requestData)
+        
+        
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors)
+
+
+
+
+
+
 

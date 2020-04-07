@@ -40,12 +40,6 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(User)
 admin.site.register(UserProfile,UserProfileAdmin)
-
-
-
 admin.site.register(Education)
 admin.site.register(Skill)
-
-# admin.site.register(SkillSet)
-
 admin.site.register(Experience)

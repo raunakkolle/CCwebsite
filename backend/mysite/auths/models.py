@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 # Create your models here.
 
-
+# Extending AbstractUser with custom fields
 class User (AbstractUser):
     email = models.EmailField( unique=True,verbose_name='email', max_length=255)
     phone = models.CharField(null=True,blank=True, max_length=255)
@@ -21,9 +21,11 @@ class User (AbstractUser):
     def __str__(self):
         return self.username
 
+
+# Adding signals to automatically create userProfile when user is created 
 @receiver(post_save, sender=User) 
 def create_product(sender, instance, created, **kwargs):
-    # print("Save method is called")
+    
     if created :
         UserProfile.objects.create(user=instance)
 
@@ -83,6 +85,22 @@ class Experience(models.Model):
     domains = models.CharField(max_length=10,null=True, blank=True)
     duration_from = models.DateField("Date From", default=datetime.date.today)
     duration_to = models.DateField("Date To",null=True, blank = True)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 # class UserResume(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE)

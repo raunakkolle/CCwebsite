@@ -20,15 +20,23 @@ urlpatterns = [
     # /activate/{uid}/{token}
     #path(r'test/<int:nos>/<int:nos2>/', views.test, name = "test" ),
     
-    # path('update/user/education/<id>/',views.updateEducationData ),
-    path('update/user/education/<id>/',views.updateEducationData.as_view() ),
-    path('update/user/experience/<id>/',views.updateExperienceData.as_view() ),
-    # path('update/skill/',views.updateSkillData ),
-
-    path('get/user/education/',views.getEducationData.as_view() ),
-    path('get/user/experience/',views.getExperienceData.as_view() ),
     path('get/user/profile/',views.getUserProfile.as_view() ),
     path('get/skills/',views.getSkills.as_view() ),
     
+    
+    path('get/user/education/',views.getEducationData.as_view() ),
+    path('get/user/experience/',views.getExperienceData.as_view() ),
+    
+    path('update/user/education/<id>/',views.updateEducationData.as_view() ),
+    path('update/user/experience/<id>/',views.updateExperienceData.as_view() ),
+    path('update/user/profile/',views.updateUserProfile.as_view() ),
+
+
+    path('add/user/education/',views.addEducationData.as_view() ),
+    path('add/user/experience/',views.addExperienceData.as_view() ),
+    
+
+    
 ]
+
 
