@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'drf_yasg',   
 
 ]
 
@@ -98,6 +99,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSIONS_CLASSES':(
             'rest_framework.permissions.IsAuthenticated',
         ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 AUTH_USER_MODEL = 'auths.User'
