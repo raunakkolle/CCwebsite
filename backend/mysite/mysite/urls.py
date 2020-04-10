@@ -44,6 +44,7 @@ urlpatterns = [
     
 
     path(r'auth/', include('auths.urls')),
+    path(r'blogs/', include('blogs.urls')),
     
 
     # https://drf-yasg.readthedocs.io/en/stable/readme.html#installation

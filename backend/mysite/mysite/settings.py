@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'corsheaders',
     'auths',
+    'blogs',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -110,7 +111,7 @@ DJOSER ={
     'PASSWORD_RESET_CONFIRM_URL': 'auth/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'auth/username/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': 'auth/activate/{uid}/{token}',
-   # 'SEND_ACTIVATION_EMAIL': True,
+   'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS':{
         'user_create' : 'auths.serializers.UserCreateSerializer',
         'user' : 'auths.serializers.UserCreateSerializer'

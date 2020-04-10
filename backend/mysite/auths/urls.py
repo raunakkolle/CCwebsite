@@ -34,6 +34,10 @@ urlpatterns = [
 
     path('add/user/education/',views.addEducationData.as_view() ),
     path('add/user/experience/',views.addExperienceData.as_view() ),
+
+
+
+    path('get/user/resume/',views.getResumeData.as_view() ),
     
 
     

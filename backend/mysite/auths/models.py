@@ -38,6 +38,7 @@ def save_user_profile(sender, instance, **kwargs):
         
 class Skill(models.Model):
     title = models.CharField(max_length=50)
+    # type = Technical, creative, etc etc...
     def __str__(self):
         return self.title
 
@@ -81,8 +82,10 @@ class Education(models.Model):
 class Experience(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
+    # position = models.CharField(max_length=50)
+    # company = models.CharField(max_length=50)
     description = models.TextField(max_length=500,null=True, blank=True)    
-    domains = models.CharField(max_length=10,null=True, blank=True)
+    domains = models.CharField(max_length=100,null=True, blank=True)
     duration_from = models.DateField("Date From", default=datetime.date.today)
     duration_to = models.DateField("Date To",null=True, blank = True)
     
@@ -101,13 +104,13 @@ class Experience(models.Model):
 
 
 
-    
+
 # class UserResume(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Education
     # Experience
     # skills
-
+    # Award and Achivements TODO
 
 
 
@@ -116,3 +119,5 @@ class Experience(models.Model):
 #     skill = models.ManyToManyField(Skill)
 
 
+
+# TODO : Modify it to store user's skill along with degree of expertise eg HTML[9/10], CSS[7/10] .... 

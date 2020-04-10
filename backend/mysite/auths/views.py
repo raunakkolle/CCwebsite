@@ -161,6 +161,37 @@ class addExperienceData(APIView):
             print(serializer.errors)
             return Response(serializer.errors)
 
+class getResumeData(APIView):
+
+    def get(self,request):
+        profile = UserProfile.objects.get(user=request.user)
+        profile_serializer = UserProfileSerializer(profile)
+
+        edu = Education.objects.filter(user=request.user.userprofile)
+        edu_serializer = UserEducationSerializer(edu, many=True)
+
+        exp = Experience.objects.filter(user=request.user.userprofile)
+        exp_serializer = UserExperienceSerializer(exp, many=True)
+
+        print(  )
+        skills = Skill.objects.filter(id__in= (profile_serializer.data['skills']))
+        skill_serializer = SkillSerializer(skills, many=True)
+
+        # print(skill_serializer.data)
+
+        data = {
+            'profile' : profile_serializer.data,
+            'education' : edu_serializer.data,
+            'experience' : exp_serializer.data,
+            'skills' : skill_serializer.data
+
+        }
+
+
+
+
+
+        return Response(data) # Return JSON
 
 
 
