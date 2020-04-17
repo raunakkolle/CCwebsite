@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import *
 # Register your models here.
-
+from django.contrib.admin.models import LogEntry
 
 class EducationInline(admin.StackedInline):
     model = Education
@@ -43,3 +43,4 @@ admin.site.register(UserProfile,UserProfileAdmin)
 admin.site.register(Education)
 admin.site.register(Skill)
 admin.site.register(Experience)
+admin.site.register(LogEntry)
