@@ -20,9 +20,9 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None,               
-        {'fields': ['user','bio','location','company','interest','birth_date']}),
+        {'fields': ['user','firstname','lastname','bio','location','company','interest','birth_date']}),
         ('Work details', {'fields': ['branch','USN','sem', 'skills']}),
-        ('Social', {'fields': ['website','linkedIn_ID', 'github_ID']}),
+        ('Social', {'fields': ['website','linkedIn_ID', 'github_ID','codechef_id','codeforces_id','hackerrank_id']}),
         ('Uploads', {'fields': ['profile_picture', 'resume']}),
     ]
 

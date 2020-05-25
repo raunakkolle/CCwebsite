@@ -20,6 +20,9 @@ urlpatterns = [
     # /activate/{uid}/{token}
     #path(r'test/<int:nos>/<int:nos2>/', views.test, name = "test" ),
     
+    path('get/users/',views.getUsers.as_view() ),
+
+
     path('get/user/profile/',views.getUserProfile.as_view() ),
     path('get/skills/',views.getSkills.as_view() ),
     

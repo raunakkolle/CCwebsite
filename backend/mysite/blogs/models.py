@@ -16,16 +16,23 @@ class Category(models.Model):
    def __str__(self):
     return self.title
 
+def get_anonymous_user():
+    Anonymous = User.objects.get_or_create(username='Anonymous', email = "anonymous@user.com", password="password")[0]
+    Anonymous.active = False
+    Anonymous.save()
+    return Anonymous
 
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True )
+    author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=get_anonymous_user , null=True )
     creationDate = models.DateField(("Date"), default=datetime.date.today)
     publish = models.BooleanField(default=True)
     title = models.CharField(max_length=50, blank=True)
+    tagline = models.CharField(max_length=100, blank=True)
+    background = models.ImageField(upload_to = 'blog_background/', default = 'blog_background/default.jpg')
     content = models.TextField(blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True)
-    tags = models.TextField(blank=True)
-
+    tags = models.CharField(max_length=50,blank=True)
+    
 
     class Meta:
         ordering = ['creationDate']
@@ -38,7 +45,7 @@ class Post(models.Model):
 
 
 @receiver(post_save, sender=Post) 
-def create_product(sender, instance, created, **kwargs):
+def send_mail_on_new_post(sender, instance, created, **kwargs):
     
     if created  :
         subject = "New {} from Coding Club".format(instance.category.title)
@@ -68,4 +75,11 @@ class Message(models.Model):
     def __str__(self):
         return self.subject
 
+
+class Project(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=get_anonymous_user , null=True )
+    publish = models.BooleanField(default=True)
+    title = models.CharField(max_length=50, blank=True)
+    content = models.TextField(blank=True)
+    tags = models.CharField(max_length=50,blank=True)
 
