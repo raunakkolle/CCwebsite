@@ -282,7 +282,7 @@ openBlog=(data)=>{
        
 
 
-      <Snackbar open={this.state.alert.open} autoHideDuration={1000} onClose={this.handleAlertClose}>
+      <Snackbar open={this.state.alert.open} autoHideDuration={2000} onClose={this.handleAlertClose}>
         <Alert onClose={this.handleAlertClose}  severity={this.state.alert.severity}>
           {this.state.alert.text}
         </Alert>

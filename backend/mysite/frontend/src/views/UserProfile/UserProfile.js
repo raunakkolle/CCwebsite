@@ -165,8 +165,8 @@ class UserProfile extends React.Component {
         self.setState({
             alert:{
               open : true,
-              severity:"warning",
-              text:response.data
+              severity:"error",
+              text:response.toString()
             }
           })
     });
@@ -418,7 +418,7 @@ class UserProfile extends React.Component {
         </GridContainer>
 
 
-        <Snackbar open={this.state.alert.open} autoHideDuration={1000} onClose={this.handleAlertClose}>
+        <Snackbar open={this.state.alert.open} autoHideDuration={2000} onClose={this.handleAlertClose}>
           <Alert onClose={this.handleAlertClose}  severity={this.state.alert.severity}>
             {this.state.alert.text}
           </Alert>
