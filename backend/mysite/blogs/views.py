@@ -7,7 +7,7 @@
 # from django.core.mail import send_mail
 # import json
 
-from .models import Post,  Message, Category
+from .models import Post,  Message, Category, Project
 from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponse
 from rest_framework.decorators import api_view, permission_classes
@@ -19,16 +19,34 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from .serializers import *
+
+from auths.models import User
 # Create your views here.
 
 
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 class getPosts(APIView):
 
     def get(self,request):
-        data = Post.objects.all()
+        data = Post.objects.filter(publish =True)
         serializer = PostSerializer(data, many= True)
-        return Response(serializer.data) # Return JSON
+        data = serializer.data
+
+        for i in range(len(data)):
+            d = data[i]
+
+            user = User.objects.get(pk = d['author'])
+            userData = {
+            "id" : user.pk,
+            "name" : user.username,
+            "profile" :user.userprofile.profile_picture.url
+            } 
+            data[i]['author'] = userData
+            # print(d['author'])
+
+
+
+        return Response(data) # Return JSON
 
 @permission_classes([IsAuthenticated])
 class getPost(APIView):
@@ -36,4 +54,37 @@ class getPost(APIView):
     def get(self,request,id):
         data = Post.objects.get(pk=id)
         serializer = PostSerializer(data)
-        return Response(serializer.data) # Return JSON
+        user = data.author
+        data = serializer.data
+        userData = {
+            "id" : user.pk,
+            "name" : user.username,
+            "profile" :user.userprofile.profile_picture.url
+        } 
+        data['author'] = userData
+       
+        # print(user.userprofile.profile_picture.__dict__)
+        return Response(data) # Return JSON
+
+@permission_classes([IsAuthenticated])
+class getProjects(APIView):
+
+    def get(self,request,id):
+        data = Project.objects.all()
+        serializer = ProjectSerializer(data, many=True)
+        
+
+
+
+
+        # user = data.author
+        # data = serializer.data
+        # userData = {
+        #     "id" : user.pk,
+        #     "name" : user.username,
+        #     "profile" :user.userprofile.profile_picture.url
+        # } 
+        # data['author'] = userData
+       
+        # print(user.userprofile.profile_picture.__dict__)
+        return Response(data) # Return JSON

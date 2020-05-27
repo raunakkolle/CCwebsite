@@ -12,4 +12,6 @@ urlpatterns = [
 
     path('', views.getPosts.as_view()),
     path('<id>/', views.getPost.as_view()),
+    path('projects', views.getProjects.as_view()),
+    
 ]

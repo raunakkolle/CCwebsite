@@ -49,6 +49,26 @@ def login(request):
     # return HttpResponse("hello")
     return render(request,'auths/login.html')
 
+@permission_classes([IsAuthenticated])
+class getUsers(APIView):
+
+    def get(self,request):
+        data = User.objects.filter(is_active = True)
+        serializer = UserSerializer(data, many= True)
+        data = serializer.data
+        for i in range(len(data)):
+            d = data[i]
+
+            # print(d)
+            user = UserProfile.objects.get(id = d['id'])
+            serializer = UserProfileSerializer(user)
+            
+            data[i]['profile'] = serializer.data
+            # print(user)
+
+
+
+        return Response(data) # Return JSON
 
 
 

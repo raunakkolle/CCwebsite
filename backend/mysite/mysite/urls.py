@@ -45,7 +45,7 @@ urlpatterns = [
 
     path(r'auth/', include('auths.urls')),
     path(r'blogs/', include('blogs.urls')),
-    
+        
 
     # https://drf-yasg.readthedocs.io/en/stable/readme.html#installation
 
@@ -56,7 +56,9 @@ urlpatterns = [
     re_path(r'^docs/swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     # A ReDoc view of your API specification at /redoc/
     re_path(r'^docs/redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-
+    
+    
+    path('', include('frontend.urls')),
 ]
 
 if settings.DEBUG:

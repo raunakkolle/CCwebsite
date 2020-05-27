@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import *
 # Register your models here.
-
+from django.contrib.admin.models import LogEntry
 
 class EducationInline(admin.StackedInline):
     model = Education
@@ -20,9 +20,9 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None,               
-        {'fields': ['user','bio','location','company','interest','birth_date']}),
+        {'fields': ['user','firstname','lastname','bio','location','company','interest','birth_date']}),
         ('Work details', {'fields': ['branch','USN','sem', 'skills']}),
-        ('Social', {'fields': ['website','linkedIn_ID', 'github_ID']}),
+        ('Social', {'fields': ['website','linkedIn_ID', 'github_ID','codechef_id','codeforces_id','hackerrank_id']}),
         ('Uploads', {'fields': ['profile_picture', 'resume']}),
     ]
 
@@ -43,3 +43,4 @@ admin.site.register(UserProfile,UserProfileAdmin)
 admin.site.register(Education)
 admin.site.register(Skill)
 admin.site.register(Experience)
+admin.site.register(LogEntry)
