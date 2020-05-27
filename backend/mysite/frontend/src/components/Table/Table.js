@@ -8,6 +8,8 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 // core components
+import { Link } from "react-router-dom";
+
 import styles from "assets/jss/material-dashboard-react/components/tableStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -15,7 +17,7 @@ const useStyles = makeStyles(styles);
 export default function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData, tableHeaderColor, links } = props;
-  // console.log(links);
+  
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
@@ -37,14 +39,21 @@ export default function CustomTable(props) {
         ) : null}
         <TableBody>
           {tableData.map((prop, keys) => {
+              {console.log(props)}
             return (
-              
-              <TableRow href="{props.links[key]}" key={keys} className={classes.tableBodyRow}>
+
+              <TableRow  key={keys} className={classes.tableBodyRow}>
                 {prop.map((prop, key) => {
                   return (
                     
                     <TableCell  className={classes.tableCell} key={key}>
-                      {prop}
+                      
+                      {props.links !== undefined ?(
+                          <a target="_blank" rel="noopener noreferrer" href={props.links[keys]}>{prop}</a> 
+                        ):(
+                          null
+
+                        )}
                     </TableCell>
 
                   );

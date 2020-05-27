@@ -1,7 +1,7 @@
 import React from 'react';
 import './Card.css';
 import axios from 'axios';
-
+import SERVER_URL from 'Server'
 class BlogCard extends React.Component{
 
   constructor(props){
@@ -12,57 +12,16 @@ class BlogCard extends React.Component{
 
   };
 
-  // componentDidMount(){
-
-  //   let config = {
-  //     headers: {
-  //       Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325",
-  //     }
-  //   }
-
-  //   console.log("MAKING API CALL")
-  //    axios.get('http://127.0.0.1:8000/blogs/', {
-  //       headers: {
-  //         Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325"
-  //       }
-  //     })
-  //     .then(function (response) {
-  //       // console.log(response.data);
-  //       const blogs = response.data
-  //       // this.setState({ blogs });
-
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //       // console.log(this.state);
-  //     });
-  // }
-
-   // "id": 1,
-   //      "creationDate": "2020-05-04",
-   //      "publish": true,
-   //      "title": "aa",
-   //      "content": "aaa",
-   //      "tags": "aaaa",
-   //      "author": {
-   //          "id": 8,
-   //          "name": "Anonymous",
-   //          "profile": "/media/profile_pictures/default.png"
-   //      },
-   //      "category": 1
-   // <img alt="image" src="http://127.0.0.1:8000/media/blog_background/default.jpg"/>
-
   render() {
     const tags = this.props.blog.tags.split(",").filter((tag)=>(tag)).map((tag)=>(<div>{tag}</div>))
-    const background = "http://127.0.0.1:8000" + this.props.blog.background;
+    const background = SERVER_URL + this.props.blog.background;
     console.log(background)
-    // const background = "http://127.0.0.1:8000/media/blog_background/fedora_29_background-wallpaper-3840x2160.jpg";
     
 
     return (
       <div class="plx-card gold" onClick={this.props.onClick}>
         <div class="pxc-bg" style={{backgroundImage: "url(" + background + ")"}}>  </div>
-        <div class="pxc-avatar"><img src={"http://127.0.0.1:8000"+this.props.blog.author.profile}/></div>
+        <div class="pxc-avatar"><img src={SERVER_URL  +this.props.blog.author.profile}/></div>
         <div class="pxc-stopper">   </div>
         <div class="pxc-subcard">
           <div class="pxc-title">{this.props.blog.title}</div>

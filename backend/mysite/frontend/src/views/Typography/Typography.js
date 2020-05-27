@@ -22,7 +22,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
-
+import SERVER_URL from 'Server';
 import ReactMarkdown from 'react-markdown'
 const htmlParser = require('react-markdown/plugins/html-parser')
 // const HtmlToReact = require('html-to-react');
@@ -150,7 +150,7 @@ class Typography extends React.Component{
     // console.log(this.state)
     var self = this;
     console.log("MAKING API CALL")
-     axios.get('http://127.0.0.1:8000/blogs/', {
+     axios.get(SERVER_URL + '/blogs/', {
         headers: {
           Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325"
         }
@@ -243,20 +243,46 @@ openBlog=(data)=>{
       <CardBody>
         
       {/*<input type="text" placeholder="Search" style={{width:"50%", marginRight:"20px"} }/>*/}
-      <TextField id="standard-basic" label="Search" style={{width:"50%", marginRight:"20px"}} onChange={this.searchHandle}/>
       
-      {this.state.view !== -1 && <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id:-1})}>Write Article</Button>}
-      {this.state.view === -1 && <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: 0})}>Read Blogs</Button>}
+      
+      {this.state.view === 0 && 
+        <div>
+        <TextField id="standard-basic" label="Search" style={{width:"50%", marginRight:"20px"}} onChange={this.searchHandle}/>
+        
+        <Button variant="contained" color="secondary" onClick={()=>this.openBlog({id:-1})}>
+          Write Article
+        </Button>
+        </div>
+      }
+      {this.state.view === -1 && 
+        <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: 0})}>
+          Read Blogs
+        </Button>
+      }
+      {this.state.view > 0 && 
+        <div>
+        <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: 0})}>
+          Read Blogs
+        </Button>
+        {"        "}      
+        {console.log(this.state.blogs, this.state.view) }
+        {this.state.blogs.filter((blog)=>(this.state.view==blog.id))[0].author.id === 1 && 
+          <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: 0})}>
+          Edit
+        </Button>
+        }
+        </div>
+      }
       
 
       {this.state.view == 0 && blogList}
-      {this.state.view == -1 && <Markdown />  }
+      {this.state.view == -1 && <Markdown /> }
       {this.state.view > 0 && this.state.blogs.filter((blog)=>blog.id === this.state.view).map((blog)=>(<div className="renderer" style={{textAlign:"left"}}><ReactMarkdown source={blog.content}  /></div>))}
 
        
 
 
-      <Snackbar open={this.state.alert.open} autoHideDuration={3000} onClose={this.handleAlertClose}>
+      <Snackbar open={this.state.alert.open} autoHideDuration={1000} onClose={this.handleAlertClose}>
         <Alert onClose={this.handleAlertClose}  severity={this.state.alert.severity}>
           {this.state.alert.text}
         </Alert>
@@ -272,7 +298,34 @@ openBlog=(data)=>{
 
 
 
+/*
+{
+    "id": 3,
+    "firstname": "First",
+    "lastname": "Last",
+    "bio": "This is bio of user",
+    "location": "Delhi",
+    "company": "Coding Club",
+    "interest": "Machine learning, web Development",
+    "birth_date": "2020-05-05",
+    "profile_picture": "/media/profile_pictures/shaurya_XAyHyEV.jpg",
+    "resume": "/media/resume/userResume.txt",
+    "branch": "ISE",
+    "USN": "1RV18CS001",
+    "website": "http://relayhack.herokuapp.com/",
+    "linkedIn_ID": "http://relayhack.herokuapp.com/",
+    "github_ID": "http://relayhack.herokuapp.com/",
+    "codechef_id": "codechef",
+    "codeforces_id": "codechef",
+    "hackerrank_id": "codechef",
+    "sem": "1",
+    "user": 3,
+    "skills": [
+      1
+    ]
+  }
 
+*/
 
 
 

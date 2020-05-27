@@ -3,6 +3,8 @@ import React from 'react';
 // import './markdown.css';
 // import marked from 'marked';
 import SimpleMDE from "react-simplemde-editor";
+import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
 import "easymde/dist/easymde.min.css";
 class Markdown extends React.Component {
         constructor(props) {
@@ -29,6 +31,14 @@ class Markdown extends React.Component {
                             <SimpleMDE onChange={this.handleChange} />
                         
                         </div>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            size="medium"
+                            startIcon={<SaveIcon />}
+                          >
+                            Save
+                          </Button>
                         
                     </div>);
 
