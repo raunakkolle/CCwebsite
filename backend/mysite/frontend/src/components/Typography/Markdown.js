@@ -5,37 +5,81 @@ import React from 'react';
 import SimpleMDE from "react-simplemde-editor";
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import TextField from '@material-ui/core/TextField';
 import "easymde/dist/easymde.min.css";
 class Markdown extends React.Component {
         constructor(props) {
             super(props);
+            console.log("PROPS IS ", props)
             this.state = {
-                editor: {content: "Hello\n=======\n\nWorld\n-----------\n \n### How are you\n \nText attributes *italic*, **bold**, \n`monospace`, ~~strikethrough~~ .\n\nList one:\n\n  * sunny\n  * cloudy\n  * rainy\n\nList 2:\n\n  1. coffee\n  2. tea\n  3. pop\n\nTry it yourself.\n\n"}
-            };
+                data:this.props.blogData
+            }
 
-            this.onChange = this.onChange.bind(this);
+            this.handleChange = this.handleChange.bind(this);
+            this.handleContentChange = this.handleContentChange.bind(this);
 
         }
 
-        onChange(event) {
-            const change = this.state.editor;
-            change.content = event.target.value;
-            this.setState({editor: change})
+        handleChange(event) {
+            const data = this.state.data;
+            data[event.target.id] = event.target.value;
+            
+            this.setState({data: data})
         }
+        handleContentChange = value => {
+          
+            const data = this.state.data;
+            data['content'] = value;
+            this.setState({data: data})
+        };
 
         render() {
             return (
                     <div >
+                        <div>
+                        <TextField
+                          id="title"
+                          label="Title"
+                          placeholder="Title"
+                          value= {this.state.data.title}
+                          // defaultValue= "This is default value"
+                          fullWidth
+                          onChange={this.handleChange}
+                        />
+                        <br/>
+                        <TextField
+                          id="tagline"
+                          label="Tagline"
+                          placeholder="tagline"
+                          value= {this.state.data.tagline}
+                          multiline
+                          fullWidth
+                          onChange={this.handleChange}
+                        />
+                        <br/>
+                        </div>
                         <div id="header">Markdown Editor</div>
                         <div className='bod'>
-                            <SimpleMDE onChange={this.handleChange} />
-                        
+                            <SimpleMDE  id="content" style={{ "text-align": "justify"}} onChange={this.handleContentChange} value={this.state.data.content} />
+                            <br/>
+                            <TextField
+                          id="tags"
+                          label="Tags"
+                          placeholder="write comma saperated tags. eg blog,html,machine learning, ..."
+                          multiline
+                          value= {this.state.data.tags}
+                          fullWidth
+                          onChange={this.handleChange}
+                        />
+                        <br/>
                         </div>
+                        <br/>
                           <Button
                             variant="contained"
                             color="primary"
-                            size="medium"
+                            size="large"
                             startIcon={<SaveIcon />}
+                            onClick = {()=>(this.props.saveAction(this.state.data))}
                           >
                             Save
                           </Button>

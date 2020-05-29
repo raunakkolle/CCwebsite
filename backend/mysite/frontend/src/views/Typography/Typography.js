@@ -112,6 +112,7 @@ class Typography extends React.Component{
     super(props)
     this.state = {
       blogs:[],
+      
       searchText :"",
       alert : {
         open:false,
@@ -119,12 +120,19 @@ class Typography extends React.Component{
         text:"xxx"
 
       },
-      // 0 for list of blogs, -1 for editor & rest for blog id 
+
+      // view will be
+      // 0 for list of blogs, 
+      // -1 for new post,
+      // -id for edit post 
+      //  id rest for blog id 
       view:0
     }
     this.handleAlertClose = this.handleAlertClose.bind(this)
     this.searchHandle = this.searchHandle.bind(this)
     this.openBlog = this.openBlog.bind(this)
+    this.addBlog = this.addBlog.bind(this)
+    this.editBlog = this.editBlog.bind(this)
 
   };
 
@@ -213,14 +221,120 @@ searchHandle(event){
 openBlog=(data)=>{
   // this.setState({view:event.target.value})
   console.log(data)
-  this.setState({view:data.id});
+  this.setState({view:data.id,
+    
+  });
+  if(data.blogData){
+    this.setState({
+      blogData:data.blogData
+    
+  });
+  }
+  else{
+   this.setState({
+      blogData:{
+        'title':"",
+        'tagline':"",
+        'content':"",
+        'tags':""
+      }
+    
+    }); 
+  }
+}
+addBlog(data){
+  // console.log("BLOG TO ADD :", data)
+  var self = this;
+    delete data["id"]
+    delete data["creationDate"]
+    delete data["publish"]
+    delete data["background"]
+    delete data["author"]
+    delete data["category"]
+    
+    console.log(data)
+
+    axios({
+    method: 'post',
+    url: SERVER_URL+'/blogs/add/',
+    data: data,
+    headers: {'Content-Type': 'application/json',
+          Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325"
+     }
+    })
+    .then(function (response) {
+        self.setState({
+            alert:{
+              open : true,
+              severity:"success",
+              text:"Blog Added"
+            }
+          })
+        console.log(response);
+    })
+    .catch(function (response) {
+        //handle error
+        self.setState({
+            alert:{
+              open : true,
+              severity:"error",
+              text:response.toString()
+            }
+          })
+    });
+
 }
 
- render() {
-  // console.log(this.state)
+editBlog(data){
+  // console.log("BLOG TO ADD :", data)
+  var self = this;
+    var id = data["id"] 
 
+    delete data["id"]
+    delete data["creationDate"]
+    delete data["publish"]
+    delete data["background"]
+    delete data["author"]
+    delete data["category"]
+    
+
+    axios({
+    method: 'post',
+    url: SERVER_URL+'/blogs/edit/'+id+'/',
+    data: data,
+    headers: {'Content-Type': 'application/json',
+          Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325"
+     }
+    })
+    .then(function (response) {
+        self.setState({
+            alert:{
+              open : true,
+              severity:"success",
+              text:"Blog Added"
+            }
+          })
+        console.log(response);
+    })
+    .catch(function (response) {
+        //handle error
+        self.setState({
+            alert:{
+              open : true,
+              severity:"error",
+              text:response.toString()
+            }
+          })
+    });
+
+}
+
+
+
+ render() {
+  
   const {classes }= this.props;
-  // console.log(classes);
+  
   const BlogsFiltered = this.state.blogs.filter((blog)=> {
     return (
       blog.title.toLowerCase().includes(this.state.searchText.toLowerCase()) ||
@@ -249,12 +363,12 @@ openBlog=(data)=>{
         <div>
         <TextField id="standard-basic" label="Search" style={{width:"50%", marginRight:"20px"}} onChange={this.searchHandle}/>
         
-        <Button variant="contained" color="secondary" onClick={()=>this.openBlog({id:-1})}>
+        <Button variant="contained" color="secondary" onClick={()=>this.openBlog({id:"NEW_BLOG"})}>
           Write Article
         </Button>
         </div>
       }
-      {this.state.view === -1 && 
+      {(this.state.view == "NEW_BLOG" || this.state.view == "EDIT_BLOG" )&& 
         <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: 0})}>
           Read Blogs
         </Button>
@@ -264,10 +378,16 @@ openBlog=(data)=>{
         <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: 0})}>
           Read Blogs
         </Button>
-        {"        "}      
-        {console.log(this.state.blogs, this.state.view) }
-        {this.state.blogs.filter((blog)=>(this.state.view==blog.id))[0].author.id === 1 && 
-          <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: 0})}>
+        {"        "}   
+
+        
+        {this.state.blogs.filter((blog)=>(this.state.view==blog.id))[0].author.id === 3 && 
+          <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: "EDIT_BLOG",
+            blogData:this.state.blogs.filter((b)=>(this.state.view == b.id))[0]
+
+          }
+          )}>
+          
           Edit
         </Button>
         }
@@ -276,8 +396,14 @@ openBlog=(data)=>{
       
 
       {this.state.view == 0 && blogList}
-      {this.state.view == -1 && <Markdown /> }
-      {this.state.view > 0 && this.state.blogs.filter((blog)=>blog.id === this.state.view).map((blog)=>(<div className="renderer" style={{textAlign:"left"}}><ReactMarkdown source={blog.content}  /></div>))}
+      {this.state.view == "NEW_BLOG" && <Markdown saveAction={this.addBlog} blogData={this.state.blogData}/> }
+      {this.state.view == "EDIT_BLOG" && <Markdown saveAction={this.editBlog} blogData={this.state.blogData}/> }
+      {this.state.view > 0 && this.state.blogs.filter((blog)=>blog.id === this.state.view).map((blog)=>(
+        <div className="renderer" style={{textAlign:"left"}}>
+          <ReactMarkdown escapeHtml={false} source={blog.content}  />
+        
+        </div>
+        ))}
 
        
 
@@ -324,6 +450,10 @@ openBlog=(data)=>{
       1
     ]
   }
+
+var markdown = markdown.parse(this.props.markdown);
+        return <div dangerouslySetInnerHTML={{__html:markdown}} />;
+
 
 */
 
