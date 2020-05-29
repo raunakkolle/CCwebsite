@@ -80,6 +80,14 @@ class Project(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=get_anonymous_user , null=True )
     publish = models.BooleanField(default=True)
     title = models.CharField(max_length=50, blank=True)
+    description = models.CharField(max_length=200, blank=True)
+    link = models.URLField(default='', blank=True)
+    image_url = models.URLField(default='', blank=True)
+
     content = models.TextField(blank=True)
+
+
     tags = models.CharField(max_length=50,blank=True)
 
+    def __str__(self):
+        return self.title

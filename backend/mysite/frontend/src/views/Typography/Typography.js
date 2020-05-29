@@ -17,12 +17,12 @@ import CardBody from "components/Card/CardBody.js";
 import BlogCard from "components/Typography/Card.js";
 import Markdown from "components/Typography/Markdown.js";
 import axios from 'axios';
+import SERVER_URL from 'Server';
 
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
-import SERVER_URL from 'Server';
 // import ReactMarkdown from 'react-markdown'
 import CodeBlock from "components/Typography/CodeBlock"
 const ReactMarkdown = require('react-markdown/with-html')
@@ -403,13 +403,12 @@ editBlog(data){
       {this.state.view == "EDIT_BLOG" && <Markdown saveAction={this.editBlog} blogData={this.state.blogData}/> }
       {this.state.view > 0 && this.state.blogs.filter((blog)=>blog.id === this.state.view).map((blog)=>(
         <div className="renderer" style={{textAlign:"left"}}>
-          <ReactMarkdown style={{"fontFamily":  "cursive"}}
+          <ReactMarkdown 
            escapeHtml={false}
-           source={blog.content}
            renderers = {{code:CodeBlock}}
+           source={blog.content}
              />
-           }
-           }
+           
         
         </div>
         ))}

@@ -11,12 +11,13 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import GitHubIcon from '@material-ui/icons/GitHub';
+import LinkIcon from '@material-ui/icons/Link';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import SERVER_URL from 'Server';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,44 +44,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ProjectCard() {
+export default function ProjectCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+    
   return (
-    <Card className={classes.root}>
+    <Card style={{"margin-bottom":"20px"}} className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar} 
-          src="http://localhost:3000/media/profile_pictures/shaurya_XAyHyEV.jpg"/>
+          src={SERVER_URL + props.data.profile_picture}/>
             
           
         }
         
-        title="Project Title"
-        subheader="Author"
+        title={props.data.title}
+        subheader={props.data.author}
       />
       <CardMedia
         className={classes.media}
-        image="https://media.istockphoto.com/photos/project-manager-working-with-gantt-chart-planning-tracking-milestone-picture-id995684292"
-        title="Project title"
+        image={props.data.image_url}
+        title={props.data.title}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Short detail Short detail Short detail Short detail Short detail
+          {props.data.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <a href="http://www.google.com" target="_blank">
-          <IconButton aria-label="open github">
-            <GitHubIcon />
+        <a href={props.data.link} target="_blank">
+          <IconButton aria-label="open website">
+            <LinkIcon />
           </IconButton>
         </a>
-        <CopyToClipboard text={"TITLE \n DETAIL \n LINK"}
+        <CopyToClipboard text={
+          props.data.title + "\n" +
+          props.data.description + "\n" +
+          props.data.link
+
+
+        }
           >
           
         <IconButton aria-label="copy-to-clipboard">
@@ -102,8 +109,7 @@ export default function ProjectCard() {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>
-          Method:
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
+          {props.data.content}
           </Typography>
         </CardContent>
       </Collapse>

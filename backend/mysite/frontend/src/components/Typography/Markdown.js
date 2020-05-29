@@ -36,7 +36,7 @@ class Markdown extends React.Component {
         render() {
             return (
                     <div >
-                        <div>
+                      <div>
                         <TextField
                           id="title"
                           label="Title"
@@ -57,8 +57,8 @@ class Markdown extends React.Component {
                           onChange={this.handleChange}
                         />
                         <br/>
-                        </div>
-                        <div id="header">Markdown Editor</div>
+                      </div>
+                      <div id="header">Markdown Editor</div>
                         <div className='bod'>
                             <SimpleMDE  id="content" style={{ "text-align": "justify"}} onChange={this.handleContentChange} value={this.state.data.content} />
                             <br/>
@@ -72,8 +72,9 @@ class Markdown extends React.Component {
                           onChange={this.handleChange}
                         />
                         <br/>
-                        </div>
+                      </div>
                         <br/>
+                      <div>
                           <Button
                             variant="contained"
                             color="primary"
@@ -83,7 +84,7 @@ class Markdown extends React.Component {
                           >
                             Save
                           </Button>
-                        
+                      </div>
                     </div>);
 
         }

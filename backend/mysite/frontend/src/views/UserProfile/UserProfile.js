@@ -90,14 +90,8 @@ class UserProfile extends React.Component {
   }
   componentDidMount (){
 
-    // let config = {
-    //   headers: {
-    //     Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325",
-    //   }
-    // }
-    // console.log(this.state)
     var self = this;
-    // console.log("MAKING API CALL")
+
      axios.get(SERVER_URL+'/auth/get/user/profile/', {
         headers: {
           Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325"
@@ -395,16 +389,14 @@ class UserProfile extends React.Component {
             <Card profile>
               <CardAvatar profile>
                 <a href="#pablo" onClick={e => e.preventDefault()}>
-                  <img src={avatar} alt="..." />
+                  <img src={SERVER_URL+this.state.user.profile_picture} alt="profile picture" />
                 </a>
               </CardAvatar>
               <CardBody profile>
-                <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-                <h4 className={classes.cardTitle}>Alec Thompson</h4>
+                <h6 className={classes.cardCategory}>{this.state.user.company}</h6>
+                <h4 className={classes.cardTitle}>{this.state.user.firstname+" "+this.state.user.lastname}</h4>
                 <p className={classes.description}>
-                  Don{"'"}t be scared of the truth because we need to restart the
-                  human foundation in truth And I love you like Kanye loves Kanye
-                  I love Rick Owens’ bed design but the back is...
+                  {this.state.user.bio}
                 </p>
                 <input type="file"/>
 
