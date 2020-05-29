@@ -23,7 +23,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
 import SERVER_URL from 'Server';
-import ReactMarkdown from 'react-markdown'
+// import ReactMarkdown from 'react-markdown'
+import CodeBlock from "components/Typography/CodeBlock"
+const ReactMarkdown = require('react-markdown/with-html')
+
 const htmlParser = require('react-markdown/plugins/html-parser')
 // const HtmlToReact = require('html-to-react');
 // const HtmlToReactParser = require('html-to-react').Parser;
@@ -400,7 +403,13 @@ editBlog(data){
       {this.state.view == "EDIT_BLOG" && <Markdown saveAction={this.editBlog} blogData={this.state.blogData}/> }
       {this.state.view > 0 && this.state.blogs.filter((blog)=>blog.id === this.state.view).map((blog)=>(
         <div className="renderer" style={{textAlign:"left"}}>
-          <ReactMarkdown escapeHtml={false} source={blog.content}  />
+          <ReactMarkdown style={{"fontFamily":  "cursive"}}
+           escapeHtml={false}
+           source={blog.content}
+           renderers = {{code:CodeBlock}}
+             />
+           }
+           }
         
         </div>
         ))}

@@ -1,6 +1,6 @@
 // import MarkdownEditor from '@uiw/react-markdown-editor';
 import React from 'react';
-// import './markdown.css';
+import './markdown.css';
 // import marked from 'marked';
 import SimpleMDE from "react-simplemde-editor";
 import Button from '@material-ui/core/Button';
