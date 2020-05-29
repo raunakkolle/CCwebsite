@@ -69,22 +69,17 @@ class getPost(APIView):
 @permission_classes([IsAuthenticated])
 class getProjects(APIView):
 
-    def get(self,request,id):
-        data = Project.objects.all()
+    def get(self,request):
+        data = Project.objects.filter(publish=True)
         serializer = ProjectSerializer(data, many=True)
-        
+        projects = serializer.data
 
+        for i in range(len(projects)):
+            print(projects[i])
+            author = User.objects.get(pk = projects[i]['author'])
+            print(projects[i]['author'])
+            print("------------------------------------")
+            projects[i]['author'] = author.userprofile.firstname +" "+ author.userprofile.lastname
+            projects[i]['profile_picture'] = author.userprofile.profile_picture.url 
 
-
-
-        # user = data.author
-        # data = serializer.data
-        # userData = {
-        #     "id" : user.pk,
-        #     "name" : user.username,
-        #     "profile" :user.userprofile.profile_picture.url
-        # } 
-        # data['author'] = userData
-       
-        # print(user.userprofile.profile_picture.__dict__)
-        return Response(data) # Return JSON
+        return Response(projects) 
