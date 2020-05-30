@@ -75,10 +75,10 @@ class getProjects(APIView):
         projects = serializer.data
 
         for i in range(len(projects)):
-            print(projects[i])
+            # print(projects[i])
             author = User.objects.get(pk = projects[i]['author'])
-            print(projects[i]['author'])
-            print("------------------------------------")
+            # print(projects[i]['author'])
+            # print("------------------------------------")
             projects[i]['author'] = author.userprofile.firstname +" "+ author.userprofile.lastname
             projects[i]['profile_picture'] = author.userprofile.profile_picture.url 
 

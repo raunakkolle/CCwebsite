@@ -25,13 +25,13 @@ class Icons extends React.Component {
       {
         "id": 1,
         "publish": true,
-        "title": "InstaPostDownloader",
-        "description": "A Bot to automatically download high quality images from Instagram account",
-        "link": "https://github.com/Gr8ayu/",
+        "title": "",
+        "description": "",
+        "link": "",
         "image_url": "",
-        "content": "A Bot to automatically download high quality images from Instagram account. It is written in python and and use selenium driver to automaticall browse internet and download images in high quality",
-        "tags": "Instagram, bot, python, aiutomation, web scraping",
-        "author": 3
+        "content": "",
+        "tags": "",
+        "author": ""
       }]
     }
 
@@ -66,10 +66,10 @@ class Icons extends React.Component {
     const projects = this.state.projects
     const projectList = projects.map((project)=>{
       return (<GridItem xs={12} sm={4} md={3}>
-          <ProjectCard data = {project}/>
+          <ProjectCard id={project.id} data = {project}/>
       </GridItem>)
     })
-    console.log(projectList)
+    
     return (
       <GridContainer>
         {projectList}

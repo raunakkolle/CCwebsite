@@ -50,7 +50,15 @@ export default function ProjectCard(props) {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
+  }; 
+  const tagStyle={
+    "color":"#e7445d",
+    "background":"#f1f1f1",
+    "border":"0px solid red",
+    "padding":"4px",
+    "margin":"2px"
+  } 
+  const tags = props.data.tags.split(',').map((tag)=>(<div><small><code style={tagStyle}>{tag.trim()}</code></small></div>));
     
   return (
     <Card style={{"margin-bottom":"20px"}} className={classes.root}>
@@ -109,9 +117,18 @@ export default function ProjectCard(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>
-          {props.data.content}
+            <small>{props.data.content}</small>
           </Typography>
+          <Typography >
+            {tags}
+          </Typography>
+          
+          
+
+
         </CardContent>
+
+          
       </Collapse>
     </Card>
   );

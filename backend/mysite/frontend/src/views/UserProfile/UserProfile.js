@@ -273,7 +273,7 @@ class UserProfile extends React.Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Website"
+                      labelText="Website url"
                       id="website"
                       formControlProps={{
                         fullWidth: true
@@ -287,7 +287,7 @@ class UserProfile extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="linkedIn_ID"
+                      labelText="linkedIn_url"
                       id="linkedIn_ID"
                       formControlProps={{
                         fullWidth: true
@@ -301,7 +301,7 @@ class UserProfile extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="github_ID"
+                      labelText="github_url"
                       id="github_ID"
                       formControlProps={{
                         fullWidth: true
