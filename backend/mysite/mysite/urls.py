@@ -40,7 +40,7 @@ schema_view = get_schema_view(
 urlpatterns = [
 
 
-    path('admin/', admin.site.urls),
+    path('admins/', admin.site.urls),
     
 
     path(r'auth/', include('auths.urls')),
@@ -58,7 +58,8 @@ urlpatterns = [
     re_path(r'^docs/redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
     
-    path('', include('frontend.urls')),
+    path('web/', include('frontend.urls')),
+    re_path(r'admin.*', include('frontend.urls')),
 ]
 
 if settings.DEBUG:
