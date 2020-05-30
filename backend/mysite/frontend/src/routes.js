@@ -54,7 +54,7 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/table",
+    path: "/members",
     name: "Member List",
     rtlName: "قائمة الجدول",
     icon: "content_paste",
@@ -62,7 +62,7 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/typography",
+    path: "/blogs",
     name: "Blogs",
     rtlName: "طباعة",
     icon: LibraryBooks,
@@ -70,7 +70,7 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/icons",
+    path: "/projects",
     name: "Projects",
     rtlName: "الرموز",
     icon: BubbleChart,

@@ -85,8 +85,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
-                <DateRange />
-                Last 24 Hours
+                
               </div>
             </CardFooter>
           </Card>
@@ -103,8 +102,8 @@ export default function Dashboard() {
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
+                
+                
               </div>
             </CardFooter>
           </Card>
@@ -120,8 +119,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
-                <Update />
-                Just Updated
+                
               </div>
             </CardFooter>
           </Card>
@@ -204,11 +202,11 @@ export default function Dashboard() {
       <GridContainer>
         <GridItem xs={12} sm={12} md={6}>
           <CustomTabs
-            title="Tasks:"
+            title=""
             headerColor="primary"
             tabs={[
               {
-                tabName: "Bugs",
+                tabName: "Hackathons",
                 tabIcon: BugReport,
                 tabContent: (
                   <Tasks
@@ -219,7 +217,7 @@ export default function Dashboard() {
                 )
               },
               {
-                tabName: "Website",
+                tabName: "Competetive",
                 tabIcon: Code,
                 tabContent: (
                   <Tasks
@@ -230,7 +228,7 @@ export default function Dashboard() {
                 )
               },
               {
-                tabName: "Server",
+                tabName: "Events",
                 tabIcon: Cloud,
                 tabContent: (
                   <Tasks
@@ -246,15 +244,15 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
+              <h4 className={classes.cardTitleWhite}>LEADERBOARD</h4>
               <p className={classes.cardCategoryWhite}>
-                New employees on 15th September, 2016
+                Work hard and Claim your position
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="warning"
-                tableHead={["ID", "Name", "Salary", "Country"]}
+                tableHead={["ID", "Name", "Score", "league"]}
                 tableData={[
                   ["1", "Dakota Rice", "$36,738", "Niger"],
                   ["2", "Minerva Hooper", "$23,789", "Curaçao"],

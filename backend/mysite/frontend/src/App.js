@@ -11,7 +11,7 @@ import RegistrationForm from './components/auths/RegistrationForm/registrationFo
 import Login from './components/auths/login/Login';
 import Dashboard from './components/dashboard';
 import Admin from "layouts/Admin.js";
-
+import {ProtectedRoute} from "./protectedRoutes"
 import {Provider} from 'react-redux'
 import store from './redux/store'
 
@@ -32,13 +32,12 @@ function App() {
                 <li><Link to="/register">register</Link></li>
                 <li><Link to="/dashboard">dashboard</Link></li>
                 </ul>
-              </nav>*/}
+              <Route path="/admin" component={Admin} />
+              </nav>*/} 
               
               <Route path="/register" component = {RegistrationForm} />
               <Route path="/login" component = {Login} />
-              <Route path="/dashboard" component = {Dashboard} />
-              <Route path="/admin" component={Admin} />
-              <Redirect from="/" to="/admin/dashboard" />
+              <ProtectedRoute path="/admin" component = {Admin}/>
 
             </main>
           </Switch>

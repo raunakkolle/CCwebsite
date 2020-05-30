@@ -7,7 +7,7 @@ const middleware = [thunk]
 const initialState = {
     domain: '127.0.0.1:8000/',
     loggingIn : false,
-    loggedIn : true,
+    loggedIn : false,
     
     user : {
         username : "user",
