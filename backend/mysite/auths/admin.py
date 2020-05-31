@@ -38,7 +38,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ['USN','company']
 
 
-admin.site.register(User)
+# admin.site.register(User)
 admin.site.register(UserProfile,UserProfileAdmin)
 admin.site.register(Education)
 admin.site.register(Skill)

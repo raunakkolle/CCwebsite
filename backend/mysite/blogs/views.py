@@ -19,8 +19,9 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from .serializers import *
+from django.contrib.auth.models import User
 
-from auths.models import User
+#   from auths.models import User
 # Create your views here.
 
 

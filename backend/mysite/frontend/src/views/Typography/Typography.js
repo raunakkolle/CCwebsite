@@ -163,7 +163,7 @@ class Typography extends React.Component{
     console.log("MAKING API CALL")
      axios.get(SERVER_URL + '/blogs/', {
         headers: {
-          Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325"
+          Authorization: "TOKEN 9758b89a4f4fb899d168b6ebf1dcc25a006faec2"
         }
       })
       .then(function (response) {

@@ -125,7 +125,7 @@ class RegistrationForm extends React.Component {
 
     return (
             <div>
-                { this.props.loggedIn == true ? <Redirect to="/dashboard" /> : null }
+                { this.props.loggedIn == true ? <Redirect to="/admin" /> : null }
                 <p>{this.props.user.name}</p>
 
 

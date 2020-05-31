@@ -1,23 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.contrib.auth.models import User
 import datetime
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 # Create your models here.
 
 # Extending AbstractUser with custom fields
-class User (AbstractUser):
-    email = models.EmailField( unique=True,verbose_name='email', max_length=255)
+# class User (AbstractUser):
+#     email = models.EmailField( unique=True,verbose_name='email', max_length=255)
     
-    REQUIRED_FIELDS = ['username']
+#     REQUIRED_FIELDS = ['username']
 
-    USERNAME_FIELD = 'email'
+#     USERNAME_FIELD = 'email'
 
-    def get_username(self):
-        return self.email
+#     def get_username(self):
+#         return self.email
 
-    def __str__(self):
-        return self.username
+#     def __str__(self):
+#         return self.username
 
 
 # Adding signals to automatically create userProfile when user is created 
