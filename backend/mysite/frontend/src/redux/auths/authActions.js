@@ -119,11 +119,13 @@ const loginUser = (user) => {
         }
     }
 
-const logoutUser = (user) => {
+const logoutUser = (token) => {
     return dispatch=>{
         axios({
             method: 'post',
             url: SERVER_URL+'/auth/token/logout/',
+            headers: {'Authorization': 'TOKEN '+token}
+
             })
             .then(function (response) {
                 

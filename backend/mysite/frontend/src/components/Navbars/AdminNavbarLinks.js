@@ -18,12 +18,15 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import {connect} from 'react-redux'
+import {logoutUser} from 'redux/auths/authActions'
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
 
-export default function AdminNavbarLinks() {
+ function AdminNavbarLinks(props) {
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
@@ -38,11 +41,13 @@ export default function AdminNavbarLinks() {
     setOpenNotification(null);
   };
   const handleClickProfile = event => {
-    if (openProfile && openProfile.contains(event.target)) {
-      setOpenProfile(null);
-    } else {
-      setOpenProfile(event.currentTarget);
-    }
+    // if (openProfile && openProfile.contains(event.target)) {
+    //   setOpenProfile(null);
+    // } else {
+    //   setOpenProfile(event.currentTarget);
+    // }
+    
+    props.Logout(props.token)
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
@@ -67,18 +72,23 @@ export default function AdminNavbarLinks() {
         </Button>
       </div>
       */}
-      <Button
+      {
+        /*
+            <Button
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
         simple={!(window.innerWidth > 959)}
         aria-label="Dashboard"
         className={classes.buttonLink}
+        onClick= {()=>{props.history.push("/login")}}
       >
         <Dashboard className={classes.icons} />
         <Hidden mdUp implementation="css">
           <p className={classes.linkText}>Dashboard</p>
         </Hidden>
       </Button>
+        */
+      }
       {/*
         <div className={classes.manager}>
         <Button
@@ -198,7 +208,7 @@ export default function AdminNavbarLinks() {
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleClickProfile}
                       className={classes.dropdownItem}
                     >
                       Logout
@@ -213,3 +223,20 @@ export default function AdminNavbarLinks() {
     </div>
   );
 }
+const mapDispatchToProps = dispatch => {
+  return {
+      Logout: (token) => dispatch(logoutUser(token))
+}
+};
+const mapStateToProps = state => {
+  //state.reducer.name if combined reducer is used
+  return {
+    domain : state.domain,
+    user : state.user,
+    loggedIn : state.loggedIn,
+    loggingIn : state.loggingIn,
+    token: state.TOKEN
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AdminNavbarLinks);
