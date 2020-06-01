@@ -7,12 +7,12 @@ const middleware = [thunk]
 const initialState = {
     domain: '127.0.0.1:8000/',
     loggingIn : false,
-    loggedIn : true,
+    loggedIn : false,
     
     user : {
-        username : "user",
-        email : "user@user.com",
-        token : "5922a3f55d1f5ca3a10c8d6c35a25927f9a60447"
+        username : "",
+        email : "",
+        token : ""
     },
 
     error : ""

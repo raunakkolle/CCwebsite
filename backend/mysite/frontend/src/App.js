@@ -19,24 +19,20 @@ const hist = createBrowserHistory();
 
 function App() {
     const isLoggedIn = store.getState().loggedIn;
-    console.log("login status:",isLoggedIn)
+    // console.log("login status:",isLoggedIn)
+              // <Redirect  from="/" to="/admin" />
   return (
     <Provider store={store}>
         <div className="App">
           <Router history={hist}>
           <Switch>
             <main>
-              {/*<nav>
-                <ul> <li><Link to="/">Home</Link></li>
-                <li><Link to="/login">Home</Link></li>
-                <li><Link to="/register">register</Link></li>
-                <li><Link to="/dashboard">dashboard</Link></li>
-                </ul>
-              <Route path="/admin" component={Admin} />
-              </nav>*/} 
+              
               
               <Route path="/register" component = {RegistrationForm} />
               <Route path="/login" component = {Login} />
+              <Route exact path="/" component ={<Redirect to="/admin"/>} />
+              
               <ProtectedRoute path="/admin" component = {Admin}/>
 
             </main>

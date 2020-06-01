@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerUser from '../../../redux/auths/authActions'
+import {registerUser} from 'redux/auths/authActions'
 import {connect} from 'react-redux'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 
@@ -9,9 +9,9 @@ class RegistrationForm extends React.Component {
     super(props);
     let fields = {};
           fields["username"] = "";
-          fields["emailid"] = "";
+          fields["email"] = "";
           fields["password"] = "";
-          fields["repassword"] = "";
+          fields["re_password"] = "";
           
     this.state = {
 
@@ -47,9 +47,9 @@ class RegistrationForm extends React.Component {
       if (this.validateForm() || true) {
           
           // alert("Form submitted");
-          // console.log(this.state.errors)
-          this.props.registerUser()
-          // console.log(this.props)
+          console.log(this.state)
+          const data = this.props.registerUser(this.state.fields)
+          console.log("Register status", data)
       }
 
     }
@@ -101,10 +101,10 @@ class RegistrationForm extends React.Component {
 
 
 
-      if (typeof fields["repassword"] !== "undefined") {
-        if (fields["repassword"] !==fields["password"]) {
+      if (typeof fields["re_password"] !== "undefined") {
+        if (fields["re_password"] !==fields["password"]) {
           formIsValid = false;
-          errors["repassword"] = "*Password do not match.";
+          errors["re_password"] = "*Password do not match.";
         }
       }
        this.setState({
@@ -116,16 +116,18 @@ class RegistrationForm extends React.Component {
 
   }    
 
+
+
   render() {
-    if(this.props.loggingIn){
+    if(this.props.loggedIn){
       console.log(this.props.loggedIn)
-          
+      return <Redirect to="/admin" />          
       
     }
 
+                // { this.props.loggedIn == true ? <Redirect to="/admin" /> : null }
     return (
             <div>
-                { this.props.loggedIn == true ? <Redirect to="/admin" /> : null }
                 <p>{this.props.user.name}</p>
 
 
@@ -145,11 +147,14 @@ class RegistrationForm extends React.Component {
                     <p style={{color:"red"}}> {this.state.errors.password } </p>
                     <br/>
                     <label htmlFor="username">re password</label>
-                    <input type="password" name="repassword" placeholder="password" value={this.state.fields.repassword} onChange={this.handleChange}/>
-                    <p style={{color:"red"}}> {this.state.errors.repassword } </p>
+                    <input type="password" name="re_password" placeholder="password" value={this.state.fields.re_password} onChange={this.handleChange}/>
+                    <p style={{color:"red"}}> {this.state.errors.re_password } </p>
                     <br/>
 
                     <button type="submit">Register</button>
+
+                
+                    <a onClick= {()=>{this.props.history.push("/login")}}> have account ? Login </a> 
                 </form>                
             </div>
         );
@@ -168,10 +173,12 @@ const mapStateToProps = state => {
 }
 
 
-const mapDispatchToProps = dispatch => ({
- registerUser: registerUser
-});
+const mapDispatchToProps = dispatch => {
+  return {
+ registerUser: user => dispatch(registerUser(user))
+}
+};
 
 
-// export default connect(mapStateToProps,mapDispatchToProps)(RegistrationForm);
-export default connect(mapStateToProps,{registerUser})(RegistrationForm);
+export default connect(mapStateToProps,mapDispatchToProps)(RegistrationForm);
+// export default connect(mapStateToProps,{registerUser})(RegistrationForm);

@@ -13,6 +13,7 @@ import ProjectCard from "components/ProjectCard"
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
 import axios from 'axios';
 import SERVER_URL from 'Server';
+import {connect} from 'react-redux'
 
 // const useStyles = makeStyles(styles);
 const style = theme => (styles);
@@ -41,10 +42,10 @@ class Icons extends React.Component {
   componentDidMount = ()=>{
 
     var self = this;
-
+    // console.log("Authorization", self.props.token)
      axios.get(SERVER_URL+'/blogs/projects', {
         headers: {
-          Authorization: "TOKEN 9758b89a4f4fb899d168b6ebf1dcc25a006faec2"
+          Authorization: "TOKEN "+ self.props.token  
         }
       })
       .then(function (response) {
@@ -77,5 +78,16 @@ class Icons extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  //state.reducer.name if combined reducer is used
+  return {
+    domain : state.domain,
+    user : state.user,
+    loggedIn : state.loggedIn,
+    loggingIn : state.loggingIn,
+    token: state.TOKEN
+  }
+}
 
-export default withStyles(style, {withTheme:true})(Icons);
+const comp =  withStyles(style, {withTheme:true})(Icons);
+export default connect(mapStateToProps)(comp);

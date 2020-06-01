@@ -19,6 +19,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import axios from 'axios';
 import SERVER_URL from 'Server'
 import avatar from "assets/img/faces/marc.jpg";
+import {connect} from 'react-redux'
 
 const style = {
   cardCategoryWhite: {
@@ -94,7 +95,8 @@ class UserProfile extends React.Component {
 
      axios.get(SERVER_URL+'/auth/get/user/profile/', {
         headers: {
-          Authorization: "TOKEN 9758b89a4f4fb899d168b6ebf1dcc25a006faec2"
+          Authorization: "TOKEN "+ self.props.token  
+          
         }
       })
       .then(function (response) {
@@ -141,7 +143,8 @@ class UserProfile extends React.Component {
     url: SERVER_URL+'/auth/update/user/profile/',
     data: data,
     headers: {'Content-Type': 'application/json',
-          Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325"
+          Authorization: "TOKEN "+ self.props.token  
+          
      }
     })
     .then(function (response) {
@@ -421,4 +424,17 @@ class UserProfile extends React.Component {
     );
   }
 }
-export default withStyles(styles, {withTheme:true})(UserProfile);
+const mapStateToProps = state => {
+  //state.reducer.name if combined reducer is used
+  return {
+    domain : state.domain,
+    user : state.user,
+    loggedIn : state.loggedIn,
+    loggingIn : state.loggingIn,
+    token: state.TOKEN
+  }
+}
+
+
+const comp =  withStyles(style, {withTheme:true})(UserProfile);
+export default connect(mapStateToProps)(comp);

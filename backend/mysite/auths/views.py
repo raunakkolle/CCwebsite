@@ -116,7 +116,7 @@ class updateEducationData(APIView):
             return Response(serializer.data)
         else:
             print(serializer.errors)
-            return Response(serializer.errors)
+            return Response(serializer.errors,status=400)
         
 @permission_classes([IsAuthenticated])
 class updateExperienceData(APIView):
@@ -131,7 +131,7 @@ class updateExperienceData(APIView):
             return Response(serializer.data)
         else:
             print(serializer.errors)
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=400)
 
 @permission_classes([IsAuthenticated])
 class updateUserProfile(APIView):
@@ -146,7 +146,7 @@ class updateUserProfile(APIView):
             return Response(serializer.data)
         else:
             print(serializer.errors)
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=400)
 
         
         
@@ -164,7 +164,7 @@ class addEducationData(APIView):
             return Response(serializer.data)
         else:
             print(serializer.errors)
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=400)
 
 @permission_classes([IsAuthenticated])
 class addExperienceData(APIView):
@@ -179,7 +179,7 @@ class addExperienceData(APIView):
             return Response(serializer.data)
         else:
             print(serializer.errors)
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=400)
 
 class getResumeData(APIView):
 

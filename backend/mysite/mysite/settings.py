@@ -114,12 +114,12 @@ REST_FRAMEWORK = {
 
 
 DJOSER ={
-    'LOGIN_FIELD' : 'email',
+    # 'LOGIN_FIELD' : 'email',
     'USER_CREATE_PASSWORD_RETYPE':True,
     'PASSWORD_RESET_CONFIRM_URL': 'auth/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'auth/username/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': 'auth/activate/{uid}/{token}',
-   'SEND_ACTIVATION_EMAIL': True,
+   # 'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS':{
         'user_create' : 'auths.serializers.UserCreateSerializer',
         'user' : 'auths.serializers.UserCreateSerializer'
@@ -169,9 +169,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'frontend', "build", "static"),  # update the STATICFILES_DIRS
 )
 
-
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

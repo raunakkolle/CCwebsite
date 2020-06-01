@@ -48,19 +48,19 @@ class Post(models.Model):
 def send_mail_on_new_post(sender, instance, created, **kwargs):
     
     if created  :
-        subject = "New {} from Coding Club".format(instance.category.title)
-        message = "New {} from coding Club \n {}".format(instance.category.title, instance.title)
+        subject = "New Post from Coding Club"
+        message = "New Post from coding Club \n {}".format(instance.title)
 
         recipient = []
-        for i in User.objects.values_list('email'):
+        for i in User.objects.filter(is_active=True).values_list('email'):
             recipient.append(i[0])
 
-        print(recipient)
+        # print(recipient)
 
         send_mail(
             subject,
             message,
-            'from@example.com',
+            'anonymouskmr@gmail.com',
             recipient,
             fail_silently=False,
         )

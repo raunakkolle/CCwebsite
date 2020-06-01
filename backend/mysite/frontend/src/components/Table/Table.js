@@ -17,7 +17,6 @@ const useStyles = makeStyles(styles);
 export default function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData, tableHeaderColor, links } = props;
-  
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
@@ -44,14 +43,16 @@ export default function CustomTable(props) {
 
               <TableRow  key={keys} className={classes.tableBodyRow}>
                 {prop.map((prop, key) => {
+
                   return (
                     
                     <TableCell  className={classes.tableCell} key={key}>
                       
-                      {props.links !== undefined ?(
+                      {props.links  ?(
+
                           <a target="_blank" rel="noopener noreferrer" href={props.links[keys]}>{prop}</a> 
                         ):(
-                          null
+                          prop
 
                         )}
                     </TableCell>

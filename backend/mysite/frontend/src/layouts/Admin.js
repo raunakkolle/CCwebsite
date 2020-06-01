@@ -12,8 +12,10 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
+import {connect} from 'react-redux'
 
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
+import {logoutUser} from 'redux/auths/authActions'
 
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
@@ -40,8 +42,9 @@ const switchRoutes = (
 
 const useStyles = makeStyles(styles);
 
-export default function Admin({ ...rest }) {
+function Admin(props) {
   // styles
+
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
@@ -50,6 +53,8 @@ export default function Admin({ ...rest }) {
   const [color, setColor] = React.useState("blue");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  
+
   const handleImageClick = image => {
     setImage(image);
   };
@@ -92,6 +97,17 @@ export default function Admin({ ...rest }) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [mainPanel]);
+
+  // if (this.props.loggedIn == false){
+  //         return <Redirect to={{pathname:"/login"}}/>
+
+  //   }
+        console.log(props.loggedIn)
+      if (props.loggedIn == false){
+          return <Redirect to="/login"/>
+
+    }
+
   return (
     <div className={classes.wrapper}>
       <Sidebar
@@ -102,13 +118,13 @@ export default function Admin({ ...rest }) {
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
         color={color}
-        {...rest}
+        
       />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
           routes={routes}
           handleDrawerToggle={handleDrawerToggle}
-          {...rest}
+          
         />
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         {getRoute() ? (
@@ -131,3 +147,22 @@ export default function Admin({ ...rest }) {
     </div>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+      Logout: user => dispatch(logoutUser())
+}
+};
+const mapStateToProps = state => {
+  //state.reducer.name if combined reducer is used
+  return {
+    domain : state.domain,
+    user : state.user,
+    loggedIn : state.loggedIn,
+    loggingIn : state.loggingIn,
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Admin);
+// export default Login;

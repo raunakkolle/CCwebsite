@@ -84,3 +84,73 @@ class getProjects(APIView):
             projects[i]['profile_picture'] = author.userprofile.profile_picture.url 
 
         return Response(projects) 
+
+@permission_classes([IsAuthenticated])
+class getProjects(APIView):
+
+    def get(self,request):
+        data = Project.objects.filter(publish=True)
+        serializer = ProjectSerializer(data, many=True)
+        projects = serializer.data
+
+        for i in range(len(projects)):
+            # print(projects[i])
+            author = User.objects.get(pk = projects[i]['author'])
+            # print(projects[i]['author'])
+            # print("------------------------------------")
+            projects[i]['author'] = author.userprofile.firstname +" "+ author.userprofile.lastname
+            projects[i]['profile_picture'] = author.userprofile.profile_picture.url 
+
+        return Response(projects) 
+
+@permission_classes([IsAuthenticated])
+class getProjects(APIView):
+
+    def get(self,request):
+        data = Project.objects.filter(publish=True)
+        serializer = ProjectSerializer(data, many=True)
+        projects = serializer.data
+
+        for i in range(len(projects)):
+            # print(projects[i])
+            author = User.objects.get(pk = projects[i]['author'])
+            # print(projects[i]['author'])
+            # print("------------------------------------")
+            projects[i]['author'] = author.userprofile.firstname +" "+ author.userprofile.lastname
+            projects[i]['profile_picture'] = author.userprofile.profile_picture.url 
+
+        return Response(projects) 
+
+@permission_classes([IsAuthenticated])
+class editPost(APIView):
+    def post(self,request, id):
+        post = get_object_or_404(Post, pk=id)
+
+        if post.user == request.user.pk:         
+            requestData = request.data
+            serializer = PostSerializer(post,data=requestData)
+            
+
+            if(serializer.is_valid()):
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                # print(serializer.errors)
+                return Response(serializer.errors, status=400)
+
+@permission_classes([IsAuthenticated])
+class addPost(APIView):
+    def post(self,request):
+       
+        requestData = request.data
+        serializer = PostSerializer(data=requestData)
+        # print(serializer)
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors, status=400)
+
+        
+     

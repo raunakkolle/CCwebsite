@@ -11,6 +11,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import axios from 'axios';
 import SERVER_URL from 'Server';
+import {connect} from 'react-redux'
 
 const style = {
   cardCategoryWhite: {
@@ -64,17 +65,11 @@ class TableList extends React.Component{
   }
   componentDidMount(){
 
-    // let config = {
-    //   headers: {
-    //     Authorization: "TOKEN 5d54bede23d64e548cb696343722589497cf1325",
-    //   }
-    // }
-    // console.log(this.state)
     var self = this;
     // console.log("MAKING API CALL")
      axios.get(SERVER_URL+'/auth/get/users/', {
         headers: {
-          Authorization: "TOKEN 9758b89a4f4fb899d168b6ebf1dcc25a006faec2"
+          Authorization: "TOKEN "+ self.props.token
         }
       })
       .then(function (response) {
@@ -126,7 +121,7 @@ class TableList extends React.Component{
         return user.profile.website
       }
       else{
-        return "#";
+        return null
       }
 
       })
@@ -159,5 +154,15 @@ class TableList extends React.Component{
 
 }
 
-
-export default withStyles(styles, {withTheme:true})(TableList);
+const mapStateToProps = state => {
+  //state.reducer.name if combined reducer is used
+  return {
+    domain : state.domain,
+    user : state.user,
+    loggedIn : state.loggedIn,
+    loggingIn : state.loggingIn,
+    token: state.TOKEN
+  }
+}
+const comp =  withStyles(style, {withTheme:true})(TableList);
+export default connect(mapStateToProps)(comp);
