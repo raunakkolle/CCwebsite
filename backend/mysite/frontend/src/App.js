@@ -23,6 +23,7 @@ function App() {
     const isLoggedIn = store.getState().loggedIn;
     // console.log("login status:",isLoggedIn)
               // <Redirect  from="/" to="/admin" />
+              
   return (
     <Provider store={store}>
       
@@ -33,9 +34,10 @@ function App() {
               
               
               <Route path="/register" component = {RegistrationForm} />
-              <Route path="/login" component = {Login} />
-              <Route exact path="/" component ={()=>(<Redirect to="/admin"/>)} />
-              
+              <Route path="/login" component = {Login} />              
+
+              <Route exact path="/" component ={()=><Redirect to="/admin"/>} />
+
               <ProtectedRoute path="/admin" component = {Admin}/>
 
             </main>
