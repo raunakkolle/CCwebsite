@@ -13,7 +13,9 @@ import Dashboard from './components/dashboard';
 import Admin from "layouts/Admin.js";
 import {ProtectedRoute} from "./protectedRoutes"
 import {Provider} from 'react-redux'
-import store from './redux/store'
+import {store, persistor} from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
+
 
 const hist = createBrowserHistory();
 
@@ -24,6 +26,7 @@ function App() {
               
   return (
     <Provider store={store}>
+      
         <div className="App">
           <Router history={hist}>
           <Switch>
@@ -31,8 +34,10 @@ function App() {
               
               
               <Route path="/register" component = {RegistrationForm} />
-              <Route path="/login" component = {Login} />
+              <Route path="/login" component = {Login} />              
+
               <Route exact path="/" component ={()=><Redirect to="/admin"/>} />
+
               <ProtectedRoute path="/admin" component = {Admin}/>
 
             </main>
@@ -43,6 +48,7 @@ function App() {
 
 
         </div>
+      
     </Provider>
   );
 }
