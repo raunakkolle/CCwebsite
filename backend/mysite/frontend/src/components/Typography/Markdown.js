@@ -3,6 +3,8 @@ import React from 'react';
 import './markdown.css';
 // import marked from 'marked';
 import SimpleMDE from "react-simplemde-editor";
+import MDEditor from '@uiw/react-md-editor';
+
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import TextField from '@material-ui/core/TextField';
@@ -58,9 +60,11 @@ class Markdown extends React.Component {
                         />
                         <br/>
                       </div>
+
                       <div id="header">Markdown Editor</div>
                         <div className='bod'>
-                            <SimpleMDE  id="content" style={{ "text-align": "justify"}} onChange={this.handleContentChange} value={this.state.data.content} />
+                            <MDEditor  id="content" style={{ "text-align": "justify"}} onChange={this.handleContentChange} value={this.state.data.content} />
+                            
                             <br/>
                             <TextField
                           id="tags"

@@ -1,5 +1,5 @@
 import {USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAILURE} from './authTypes'
-import {USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE,USER_LOGOUT} from './authTypes'
+import {USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE,USER_LOGOUT, UPDATE_USER_INFO} from './authTypes'
 
 
 
@@ -67,6 +67,15 @@ const authsReducer = (state , action) =>{
             },
             TOKEN:"",
             error : action.payload
+            })
+
+            case UPDATE_USER_INFO :return (
+            {...state,
+            user:{
+                email:action.payload.email,
+                id:action.payload.id,
+                username:action.payload.username
+            }
             })
 
 

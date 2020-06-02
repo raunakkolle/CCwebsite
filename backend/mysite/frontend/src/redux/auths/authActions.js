@@ -1,10 +1,10 @@
 import {USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAILURE,
 USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE,
-USER_LOGOUT
+USER_LOGOUT,UPDATE_USER_INFO
 } from './authTypes'
 // import {USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE} from './authTypes'
 
-import store from '../store'
+import {store} from '../store'
 import axios from 'axios'
 import SERVER_URL from 'Server';
 import history from '../../history'
@@ -62,9 +62,17 @@ const userLoginFailure = (error) => {
         } 
 }
 
-const userLogout = (error) => {
+const userLogout = () => {
     return {
             type : USER_LOGOUT
+
+        } 
+}
+
+const userUpdate = (data) => {
+    return {
+            type : UPDATE_USER_INFO,
+            payload: data
 
         } 
 }
@@ -111,6 +119,8 @@ const loginUser = (user) => {
             .then(function (response) {
                 
                 dispatch(userLoginSuccess(response.data))
+                console.log("XX")
+                dispatch(updateUser(response.data))
             })
             .catch(function (response) {
                 //handle error
@@ -122,6 +132,34 @@ const loginUser = (user) => {
 
         }
     }
+
+
+
+const updateUser = (token) => {
+    return dispatch=>{
+        // console.log("YY", tok)
+
+        axios({
+            method: 'get',
+            url: SERVER_URL+'/auth/users/me/',
+            headers: {'Authorization': 'TOKEN '+token.auth_token}
+
+            })
+            .then(function (response) {
+                console.log("YY",response.data)
+                dispatch(userUpdate(response.data))
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response.message);
+                
+            });
+
+
+
+        }
+    }
+
 
 const logoutUser = (token) => {
     return dispatch=>{
@@ -137,6 +175,8 @@ const logoutUser = (token) => {
             })
             .catch(function (response) {
                 //handle error
+                dispatch(userLogout())
+                
                 console.log(response.message);
                 
             });
