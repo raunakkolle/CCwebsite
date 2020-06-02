@@ -21,7 +21,7 @@ import Button from "components/CustomButtons/Button.js";
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import {connect} from 'react-redux'
 import {logoutUser} from 'redux/auths/authActions'
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -179,9 +179,9 @@ const useStyles = makeStyles(styles);
           onClick={handleClickProfile}
           className={classes.buttonLink}
         >
-          <Person className={classes.icons} />
+          <ExitToAppIcon className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}>LogOut</p>
           </Hidden>
         </Button>
         <Poppers

@@ -1,9 +1,9 @@
 import React from 'react';
 // import logo from './logo.svg';
 
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 // import {Router , Route } from "react-router"
 // import { BrowserRouter } from 'react-router-dom'
 import './App.css';
@@ -15,9 +15,9 @@ import {ProtectedRoute} from "./protectedRoutes"
 import {Provider} from 'react-redux'
 import {store, persistor} from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react'
+import history from './history'
 
-
-const hist = createBrowserHistory();
+// const hist = createBrowserHistory();
 
 function App() {
     const isLoggedIn = store.getState().loggedIn;
@@ -28,7 +28,7 @@ function App() {
     <Provider store={store}>
       
         <div className="App">
-          <Router history={hist}>
+          <Router history = {history}>
           <Switch>
             <main>
               

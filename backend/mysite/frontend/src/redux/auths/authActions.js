@@ -7,7 +7,7 @@ USER_LOGOUT
 import store from '../store'
 import axios from 'axios'
 import SERVER_URL from 'Server';
-
+import history from '../../history'
 // const login = () => {
 //     return {
 //         type : USER_LOGIN
@@ -85,10 +85,14 @@ const userLogout = (error) => {
             .then(function (response) {
                 
                 dispatch(userRegisterSuccess(response.data))
+                history.push("/login")
+
             })
-            .catch(function (response) {
+            .catch(function (error) {
                 //handle error
-                dispatch(userRegisterFailure(response.message))
+                console.log("REGISTER FAIL", error.response)
+                // if response.
+                dispatch(userRegisterFailure(error.response.data))
                 
             });
         }
