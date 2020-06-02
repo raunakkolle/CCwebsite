@@ -391,7 +391,7 @@ editBlog(data){
         {"        "}   
 
         
-        {this.state.blogs.filter((blog)=>(this.state.view==blog.id))[0].author.id === 3 && 
+        {this.state.blogs.filter((blog)=>(this.state.view==blog.id))[0].author.id === this.props.user.id && 
           <Button variant="contained"  color="secondary" onClick={()=>this.openBlog({id: "EDIT_BLOG",
             blogData:this.state.blogs.filter((b)=>(this.state.view == b.id))[0]
 

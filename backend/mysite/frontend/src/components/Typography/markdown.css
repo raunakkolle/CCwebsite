@@ -99,5 +99,5 @@ table tr:nth-child(2n) {
 }
 
 img {
-  max-width: 500px;
+  max-width: 100%;
 }
