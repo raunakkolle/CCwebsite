@@ -7,14 +7,14 @@ const authsReducer = (state , action) =>{
     switch (action.type){
         case USER_REGISTER_REQUEST :return (
             {...state,
+                error:""
             
             })
         case USER_REGISTER_SUCCESS :
             console.log("updating user success state ")
             return (
             {...state,
-            
-            userRegister : action.payload,
+        
             error: ""
             })
         
@@ -31,7 +31,8 @@ const authsReducer = (state , action) =>{
             })
         case USER_LOGIN_REQUEST :return (
             {...state,
-            loggingIn:true
+            loggingIn:true,
+            error:""
             })
 
         case USER_LOGIN_SUCCESS :
@@ -66,7 +67,7 @@ const authsReducer = (state , action) =>{
                 token : ""
             },
             TOKEN:"",
-            error : action.payload
+            error : action.payload.response
             })
 
             case UPDATE_USER_INFO :return (

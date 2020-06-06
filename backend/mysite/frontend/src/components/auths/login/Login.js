@@ -16,7 +16,7 @@ import Container from '@material-ui/core/Container';
 import {loginUser} from 'redux/auths/authActions'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-
+import './login.css';
 
 function Copyright() {
   return (
@@ -42,6 +42,11 @@ class Login extends React.Component{
         fields:{
           "username":"",
           "password":""
+        },
+        error:{
+          username:"",
+          password:"",
+          non_field_errors:""
         }
       }
       this.handleChange = this.handleChange.bind(this)
@@ -56,8 +61,8 @@ class Login extends React.Component{
 
     }
     submitLogin(e){
-      const data = this.state.fields 
       e.preventDefault();
+      const data = this.state.fields 
       this.props.Login(data)
 
     }
@@ -74,75 +79,65 @@ class Login extends React.Component{
 
 
       return (
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div >
-            <Avatar >
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <form  noValidate>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                value= {this.state.fields.username}
-                onChange={this.handleChange}
-                autoFocus
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                value= {this.state.fields.password}
+        <div className="signin">
+          
+          <div className="container" id="container">
+            
+            <div className="form-container sign-in-container">
+              <form action="#">
+                <h1>Sign in</h1>
+    
+                <span>or use your account</span>
+                <input type="text" id="username" label="Username" 
+                  name="username" 
+                  placeholder="Username"
+                  value= {this.state.fields.username}
+                  onChange={this.handleChange}
+                  autoFocus
+                  required
 
-                autoComplete="current-password"
-                onChange={this.handleChange}
+                   />
+                   <span style={{color:"red"}} >{this.state.error.username}</span>
+                <input 
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  required
 
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
+                  placeholder="password"
+                  value= {this.state.fields.password} 
+                  onChange={this.handleChange}
+                  />
+                  <span style={{color:"red"}} >{this.props.error.password}</span>
+                  <br/>
+                  <span style={{color:"red"}} >{this.props.error.non_field_errors}</span>
+                  <br/>
                 
-                fullWidth
-                variant="contained"
-                color="primary"
-                 onClick = {this.submitLogin}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="/<forgot></forgot>" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link onClick= {()=>{this.props.history.push("/register")}}variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </form>
+                <button onClick = {this.submitLogin}>Sign In</button>
+              </form>
+            </div>
+            <div className="overlay-container">
+              <div className="overlay">
+                <div className="overlay-panel overlay-left">
+                  <h1>Welcome Back!</h1>
+                  <p>To keep connected with us please login with your personal info</p>
+                  <button className="ghost" 
+                  onClick = {this.submitLogin}
+                  id="signIn"
+                  >Sign In</button>
+                </div>
+                <div className="overlay-panel overlay-right">
+                  <h1>Hello, Friend!</h1>
+                  <p>Enter your personal details and start journey with us</p>
+                  <button className="ghost" 
+                  onClick= {()=>{this.props.history.push("/register")}}
+                  id="signUp">Sign Up</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <Box mt={8}>
-            <Copyright />
-          </Box>
-        </Container>
+        </div>
       );
     }
 }
@@ -156,6 +151,7 @@ const mapStateToProps = state => {
     user : state.user,
     loggedIn : state.loggedIn,
     loggingIn : state.loggingIn,
+    error: state.error
   }
 }
 

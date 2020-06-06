@@ -122,9 +122,9 @@ const loginUser = (user) => {
                 console.log("XX")
                 dispatch(updateUser(response.data))
             })
-            .catch(function (response) {
+            .catch(function (error) {
                 //handle error
-                dispatch(userLoginFailure(response.message))
+                dispatch(userLoginFailure(error.response.data))
                 
             });
 
