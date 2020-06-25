@@ -63,6 +63,7 @@ const userLoginFailure = (error) => {
 }
 
 const userLogout = () => {
+    console.log("logout action ")
     return {
             type : USER_LOGOUT
 
@@ -163,6 +164,7 @@ const updateUser = (token) => {
 
 const logoutUser = (token) => {
     return dispatch=>{
+        dispatch(userLogout())
         axios({
             method: 'post',
             url: SERVER_URL+'/auth/token/logout/',
@@ -171,7 +173,7 @@ const logoutUser = (token) => {
             })
             .then(function (response) {
                 
-                dispatch(userLogout())
+                
             })
             .catch(function (response) {
                 //handle error

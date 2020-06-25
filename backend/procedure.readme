@@ -1,0 +1,32 @@
+pip3 install gunicorn
+gunicorn mysite.wsgi --log-file -
+gunicorn --bind 0.0.0.0:8000 mysite.wsgi --log-file -
+
+Creating systemd Socket and Service Files for Gunicorn
+
+https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04
+
+FOR GUNICORN-NGINX CONNECTION 
+Edit these files 
+sudo nano /etc/systemd/system/gunicorn.socket
+
+sudo nano /etc/systemd/system/gunicorn.service
+
+enable them
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+
+
+FOR NGINX CONFIGURATION
+sudo nano /etc/nginx/sites-available/myproject
+sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+
+
+
+https://stackoverflow.com/questions/39855304/how-to-add-user-with-dockerfile
+
+
+
+https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#docker
+https://github.com/testdrivenio/django-on-docker
+

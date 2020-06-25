@@ -66,8 +66,7 @@ const authsReducer = (state , action) =>{
                 email : "",
                 token : ""
             },
-            TOKEN:"",
-            error : action.payload.response
+            TOKEN:""
             })
 
             case UPDATE_USER_INFO :return (

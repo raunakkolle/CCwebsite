@@ -21,12 +21,20 @@ CORS_ORIGIN_ALLOW_ALL = True
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hvg)7(5!a-&7&%i%*v^3u3f7rwu(w&@jk2uh&z4ikx3z5*+f9='
+# SECRET_KEY = 'hvg)7(5!a-&7&%i%*v^3u3f7rwu(w&@jk2uh&z4ikx3z5*+f9='
+SECRET_KEY = os.environ.get("SECRET_KEY", default = 'hvg)7(5!a-&7&%i%*v^3u3f7rwu(w&@jk2uh&z4ikx3z5*+f9=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
+DEBUG = int(os.environ.get("DEBUG", default=0))
+
+
 
 ALLOWED_HOSTS = ['*']
+# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
+# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
+
+# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -178,5 +186,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
