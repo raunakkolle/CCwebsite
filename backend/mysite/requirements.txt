@@ -13,7 +13,7 @@ Django==3.0.5
 django-cors-headers==3.2.1
 django-telegrambot==1.0.1
 django-templated-mail==1.1.1
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 djoser==2.0.3
 drf-yasg==1.17.1
 future==0.18.2
