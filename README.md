@@ -1,13 +1,15 @@
 # CC Website (Database Project)
 
-This project was developed as project work for college Web technology course.
-It is developed in Django Rest Framework and React redux in frontend with following objective.
+This project was developed as a part of the project work for college Web technology course.
+It is developed using Django Rest Framework and React redux as the frontend with following objectives.
 
-The portal is being designed college Coding club as a platform to monitor club activities and share their knowledge. Platform consist of dashboard, Blogs and Project sharing. 
+The portal is being designed for college Coding club as a platform to monitor the activities conducted by the club and for its members to share their knowledge and harbor
+a community of coding enthusiasts in the campus. The Platform consist of a Dashboard, Blogs section and a Projects section where the members can learn from the blogs of 
+the other fellow members and collaborate with the other members working on various projects. 
 
 
 
-Frontend of the code in react is stored in **backend/mysite/frontend/src** folder.
+ The Frontend of the code in react is stored in **backend/mysite/frontend/src** folder.
 
 ------------
 
